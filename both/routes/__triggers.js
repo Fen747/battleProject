@@ -4,6 +4,7 @@ Triggers.mustNotBe = {};
 
 Triggers.mustNotBe.loggedIn = () => {
   if (Meteor.loggingIn() || Meteor.userId()) {
+    console.log('redirection connexion');
     FlowRouter.go('/');
   }
 };

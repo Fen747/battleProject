@@ -16,6 +16,14 @@ LoggedInRoutes.route('/', {
     });
   }
 });
+LoggedInRoutes.route('/game', {
+  name: 'game',
+  action: function() {
+    BlazeLayout.render('layout', {
+      main: 'game'
+    });
+  }
+});
 
 Accounts.onLogin(function(){
   FlowRouter.go('/');
