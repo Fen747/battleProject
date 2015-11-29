@@ -1,15 +1,12 @@
 <template name="game">
+  <ul>
+    {{#each listPlayers}}
+      <li>{{this.username}}</li>
+    {{/each}}
+  </ul>
 
   <div id="divGame"></div>
 
-  <style>
-  #divGame {
-    position: absolute;
-    top: 100px;
-    left: 0px;
-  }
-  </style>
-
-{{gameScript}}
+  {{gameScript}}
 
 </template>

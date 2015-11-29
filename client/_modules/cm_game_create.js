@@ -1,12 +1,5 @@
-Data.groups = {
-  stars     : null,
-  platforms : null,
-  units     : null
-};
-
-let Groups = Data.groups;
-
 let create = ( ) => {
+
   // On définit la taille du monde
   // @TODO Il faudra certainement gérer des maps
   Modules.client.Game.instance.world.setBounds(0, 0, 1920, 600);
@@ -51,31 +44,15 @@ let create = ( ) => {
 
   Groups.units = Game.add.group();
   Groups.units.enableBody = true;
-  unit = Groups.units.create(32, Modules.client.Game.instance.world.height - 150, 'dude');
 
-  // The player and its settings
-  unit2 = Groups.units.create(64, Modules.client.Game.instance.world.height - 150, 'dude');
+  Meteor.users.find({}, {sort: {_id: 1}}).fetch().forEach(function(user, index, array) {
+    instance_AllUnits.add(user, index*32);
+  });
+
+//  console.log(instance_AllUnits.arrayUnit);
 
   // On demande à la caméra de suivre ce joueur
-  Modules.client.Game.instance.camera.follow(unit);
-
-  //  We need to enable physics on the player
-  Modules.client.Game.instance.physics.arcade.enable(unit);
-
-  //  Player physics properties. Give the little guy a slight bounce.
-  unit.body.bounce.y = 0.2;
-  unit.body.gravity.y = 300;
-  unit.body.collideWorldBounds = true;
-
-  //  Our two animations, walking left and right.
-  unit.animations.add('left', [0, 1, 2, 3], 10, true);
-  unit.animations.add('right', [5, 6, 7, 8], 10, true);
-
-  unit2.body.bounce.y = 0.2;
-  unit2.body.gravity.y = 300;
-  unit2.body.collideWorldBounds = true;
-  unit2.animations.add('left', [0, 1, 2, 3], 10, true);
-  unit2.animations.add('right', [5, 6, 7, 8], 10, true);
+  //Modules.client.Game.instance.camera.follow(unit);
 
   //  Finally some stars to collect
   Groups.stars = Modules.client.Game.instance.add.group();
@@ -100,7 +77,8 @@ let create = ( ) => {
   scoreText = Modules.client.Game.instance.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
   // Au clic, on map un event
-	//Modules.client.Game.instance.input.onDown.add(controlsCommand, this);
+	//Modules.client.Game.instance.input.onDown.add(Modules.client.Game.controlsUnit, unit, this);
+  //Game.input.onDown.add(Modules.client.Game.controlsUnit, unit, 'right');
 };
 
 Modules.client.Game.create    = create;
