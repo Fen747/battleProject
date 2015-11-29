@@ -1,5 +1,5 @@
 Template.layout.events({
-  "click button": function(event, template){
+  "click #logout-button": function(event, template){
     Meteor.logout(function(){
           FlowRouter.go('/splash');
     });
