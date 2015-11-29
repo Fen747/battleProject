@@ -1,7 +1,6 @@
 if(Meteor.isClient){
   Meteor.startup(function(){
-    // Semble lever une erreur ?
-    //BlazeLayout.setRootBody('body');
+    BlazeLayout.setRoot('body');
   });
 }
 

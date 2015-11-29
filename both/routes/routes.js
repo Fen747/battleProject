@@ -24,7 +24,3 @@ LoggedInRoutes.route('/game', {
     });
   }
 });
-
-Accounts.onLogin(function(){
-  FlowRouter.go('/');
-});

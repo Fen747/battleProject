@@ -10,7 +10,9 @@ Triggers.mustNotBe.loggedIn = () => {
 };
 
 Triggers.mustBe.loggedIn = () => {
+  console.log('Avant MustBeLog');
   if (!(Meteor.loggingIn() || Meteor.userId())) {
+    console.log('Pendant MustBeLog');
     FlowRouter.go('/splash');
   }
 }
