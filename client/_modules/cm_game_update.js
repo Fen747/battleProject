@@ -26,8 +26,10 @@ let update = ( ) => {
     other = instance_AllUnits.get(docOther.username);
     other.position.x = _Pos.findOne(docOther._id).xPos;
 
-    Modules.client.Game.controlsUnit(unit);
+
   }
+
+  Modules.client.Game.controlsUnit();
 
 };
 

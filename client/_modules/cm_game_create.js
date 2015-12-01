@@ -46,10 +46,8 @@ let create = ( ) => {
   Groups.units.enableBody = true;
 
   Meteor.users.find({}, {sort: {_id: 1}}).fetch().forEach(function(user, index, array) {
-    instance_AllUnits.add(user, index*32);
+    unit = instance_AllUnits.add(user, index*32);
   });
-
-//  console.log(instance_AllUnits.arrayUnit);
 
   // On demande à la caméra de suivre ce joueur
   //Modules.client.Game.instance.camera.follow(unit);
@@ -77,8 +75,7 @@ let create = ( ) => {
   scoreText = Modules.client.Game.instance.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
   // Au clic, on map un event
-	//Modules.client.Game.instance.input.onDown.add(Modules.client.Game.controlsUnit, unit, this);
-  //Game.input.onDown.add(Modules.client.Game.controlsUnit, unit, 'right');
+  Game.input.onDown.add(Modules.client.Game.controlsUnit, this);
 };
 
 Modules.client.Game.create    = create;

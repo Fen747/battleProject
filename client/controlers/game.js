@@ -4,13 +4,9 @@ Template.game.onRendered(function() {
 
 Template.game.onCreated(function(){
   Meteor.subscribe("getPosition", function() {
-    console.log(_Pos);
-
   });
 
   Meteor.subscribe("getAllPlayers", function() {
-    console.log(Meteor.users.find().fetch());
-
     $(document).ready(function() {
       Modules.client.Game.instance = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, 'divGame', {
         preload : Modules.client.Game.preload,
