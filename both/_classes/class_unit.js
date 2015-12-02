@@ -2,14 +2,23 @@ class_unit = function (aType, anOwner, aPhaserItem) {
   "use strict";
 
   let attr = {
-      type        : aType,
+      type        : aType || null,
       owner       : null,
       troopSize   : 100,
       moral       : 100,
       effects     : [],
       position    : [],
-      phaser_item : null
+      phaser_item : aPhaserItem || null,
+      speed       : {
+        max     : 200,
+        current : 0
+      }
   };
+
+  this.action = {
+    type : null
+  };
+
 
   // Getters
   this.getType      = ( ) => {
@@ -30,9 +39,23 @@ class_unit = function (aType, anOwner, aPhaserItem) {
   this.getPosition  = ( ) => {
     return attr.position;
   };
+  this.getPhaserItem  = ( ) => {
+    return attr.phaser_item;
+  };
+  this.getAction  = ( ) => {
+    return attr.action;
+  };
+  this.getCurSpeed  = ( ) => {
+    return attr.speed.current;
+  };
+  this.getMaxSpeed  = ( ) => {
+    return attr.speed.max;
+  };
   this.getAttr      = ( ) => {
     return attr;
   };
+
+
 
   this.setType      = ( aType ) => {
     attr.type = aType;
@@ -55,18 +78,86 @@ class_unit = function (aType, anOwner, aPhaserItem) {
   this.setPosition  = ( aPosition ) => {
     attr.position = aPosition;
   };
+  this.setCurSpeed  = ( aSpeed ) => {
+    attr.speed.current = aSpeed;
+  };
 };
 
 class_unit.prototype = {
-  move: function ( position ) {
-    this.setPosition([0, 0]);
+  doAction: function () {
+    switch (this.action.type) {
+        case 'move':
+        {
+            let destination             = this.action.toPos,
+                unit                    = this.getPhaserItem(),
+                vitesse                 = this.getCurSpeed(),
+                VITESSE_MOUVEMENT       = this.getMaxSpeed(),
+                MARGE_ERREUR_MOUVEMENT  = 2,
+                DISTANCE_RALENTISSEMENT = 30;
+
+            if (destination != null) {
+              distanceRestante = Math.abs(destination - unit.position.x);
+
+              // Si on est à l'arret
+              if (!vitesse)
+              {
+                this.setCurSpeed(VITESSE_MOUVEMENT);
+              }
+
+              // GEstion des ralentissements du personnage en bout de course
+              if (distanceRestante < 30 )
+              {
+                vitesse = VITESSE_MOUVEMENT * ((distanceRestante * (VITESSE_MOUVEMENT / DISTANCE_RALENTISSEMENT / 2)) / 100);
+                this.setCurSpeed(vitesse);
+              }
+
+              if (unit.position.x < (destination + MARGE_ERREUR_MOUVEMENT) && unit.position.x < (destination - MARGE_ERREUR_MOUVEMENT))
+              {
+                  //  Move to the right, on doit bouger
+                  unit.body.velocity.x = vitesse;
+                  unit.animations.play('right');
+              }
+              else if (unit.position.x > (destination + MARGE_ERREUR_MOUVEMENT) && unit.position.x > (destination - MARGE_ERREUR_MOUVEMENT))
+              {
+                  unit.body.velocity.x = -vitesse;
+                  unit.animations.play('left');
+              }
+              else
+              {
+                  // On est arriver, on ne bouge plus
+                  this.getPhaserItem().body.velocity.x = 0;
+                  this.setCurSpeed(0);
+                  this.action = { type: null };
+                  unit.animations.stop();
+                  unit.frame = 4;
+              }
+            }
+            break;
+        }
+        default:
+        {
+            this.getPhaserItem().body.velocity.x = 0;
+            this.action = { type: null };
+            break;
+        }
+    }
   },
+
+  move: function ( toPosition ) {
+    this.action = {
+      type  : "move",
+      toPos : toPosition
+    };
+  },
+
   attack: function ( aUnit ) {
     // TODO
   },
+
   getNewEffect: function ( anEffec ) {
     // body...
   },
+
   logMyAttr: function () {
     console.log(this.getAttr());
   }

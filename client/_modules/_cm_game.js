@@ -33,9 +33,12 @@ AllUnits = function() {
       yPos  : yPos
     });
 
-    this.arrayUnit[user.username] = unit;
+    oUnit = new class_unit("dumb", Meteor.userId(), unit);
+    oUnit.logMyAttr();
 
-    return unit;
+    this.arrayUnit[user.username] = oUnit;
+
+    return oUnit;
   };
 
   this.remove = function() {

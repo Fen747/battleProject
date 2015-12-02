@@ -47,8 +47,6 @@ let create = ( ) => {
 
   Meteor.users.find({}, { sort: { _id: 1 } }).fetch().forEach(function(user, index, array) {
     unit = instance_AllUnits.add(user, index*32);
-    myUnit = new class_unit("dumb", Meteor.userId(), unit);
-    myUnit.logMyAttr();
   });
 
   // On demande à la caméra de suivre ce joueur

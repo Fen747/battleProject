@@ -9,6 +9,7 @@ let update = ( ) => {
 
 
   //  Collide the player and the stars with the platforms
+  Modules.client.Game.instance.physics.arcade.collide(Groups.units, Groups.units);
   Modules.client.Game.instance.physics.arcade.collide(Groups.units, Groups.platforms);
   Modules.client.Game.instance.physics.arcade.collide(Groups.stars, Groups.platforms);
 
@@ -24,8 +25,13 @@ let update = ( ) => {
     });
 
     other = instance_AllUnits.get(docOther.username);
-    other.position.x = _Pos.findOne(docOther._id).xPos;
+    let curPos = other.getPhaserItem().position.x;
+    let dest = _Pos.findOne(docOther._id ).xPos;
 
+    if (curPos != dest)
+    {
+      oUnit.move(dest);
+    }
 
   }
 

@@ -2,7 +2,7 @@ const MARGE_ERREUR_MOUVEMENT = 2;
 const VITESSE_MOUVEMENT = 200;
 const DISTANCE_RALENTISSEMENT = 30;
 const RAYON_UNITE = 15;
-let unit, vitesse;
+let oUnit, unit, vitesse;
 let boolGetUnit = false;
 
 let mouvement = { x: null };
@@ -10,11 +10,12 @@ let action;
 
 let controlsUnit = (action) => {
   if (!boolGetUnit) {
-    unit = instance_AllUnits.get(Meteor.user().username);
+    oUnit = instance_AllUnits.get(Meteor.user().username);
+    unit = oUnit.getPhaserItem();
     boolGetUnit = true;
   }
 
-  var isClick = action instanceof Phaser.Pointer;
+  let isClick = action instanceof Phaser.Pointer;
 
   if (isClick) {
     // On stock la derniere demande de mouvement
@@ -22,10 +23,12 @@ let controlsUnit = (action) => {
     let compensationCamera = Game.camera.position.x - (GAME_WIDTH / 2);
     mouvement.x = Math.round(Game.input.position.x + compensationCamera);
     mouvement.x -= RAYON_UNITE;
+    oUnit.move(mouvement.x);
   }
 
-  unit.body.velocity.x = 0;
-  if (mouvement.x != null) {
+  oUnit.doAction();
+
+  /*if (mouvement.x != null) {
     distanceRestante = Math.abs(mouvement.x - unit.position.x);
 
     // GEstion des ralentissements du personnage en bout de course
@@ -46,7 +49,7 @@ let controlsUnit = (action) => {
         unit.animations.stop();
         unit.frame = 4;
     }
-  }
+  }*/
 
    _Pos.update({
       _id: Meteor.userId(),
