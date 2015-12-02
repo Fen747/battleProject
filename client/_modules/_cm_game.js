@@ -9,11 +9,11 @@ let groups = {
 };
 
 AllUnits = function() {
-  this.arrayUnit = {};
+  let arrayUnit = {};
 
   this.add = function(user, position) {
-    let yPos = Modules.client.Game.instance.world.height - 150;
-    let unit = Groups.units.create(position, yPos, 'dude');
+    let yPos = Modules.client.Game.instance.world.height - 150,
+        unit = Groups.units.create(position, yPos, 'dude');
 
     unit.body.bounce.y = 0.2;
     unit.body.gravity.y = 300;
@@ -41,12 +41,12 @@ AllUnits = function() {
     return oUnit;
   };
 
-  this.remove = function() {
-
+  this.remove = function(username) {
+    delete(this.arrayUnit[username]);
   };
 
   this.get = function(username) {
-    return this.arrayUnit[username];
+    return (username ? this.arrayUnit[username] : this.arrayUnit);
   };
 };
 

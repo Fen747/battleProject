@@ -1,6 +1,9 @@
 class_unit = function (aType, anOwner, aPhaserItem) {
   "use strict";
 
+  /*****************************************************************************
+  ** Private attributes__
+  */
   let attr = {
       type        : aType || null,
       owner       : null,
@@ -14,13 +17,22 @@ class_unit = function (aType, anOwner, aPhaserItem) {
         current : 0
       }
   };
+  /* __Private attributes
+  *****************************************************************************/
 
+  /*****************************************************************************
+  ** Public attributes__
+  */
   this.action = {
     type : null
   };
+  /* __Public attributes
+  *****************************************************************************/
 
 
-  // Getters
+  /*****************************************************************************
+  ** Getters__
+  */
   this.getType      = ( ) => {
     return attr.type;
   };
@@ -54,9 +66,12 @@ class_unit = function (aType, anOwner, aPhaserItem) {
   this.getAttr      = ( ) => {
     return attr;
   };
+  /* __Getters
+  *****************************************************************************/
 
-
-
+  /*****************************************************************************
+  ** Setters
+  */
   this.setType      = ( aType ) => {
     attr.type = aType;
   };
@@ -81,6 +96,8 @@ class_unit = function (aType, anOwner, aPhaserItem) {
   this.setCurSpeed  = ( aSpeed ) => {
     attr.speed.current = aSpeed;
   };
+  /* __Setters
+  *****************************************************************************/
 };
 
 class_unit.prototype = {
