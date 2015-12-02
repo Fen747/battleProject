@@ -14,6 +14,7 @@ AllUnits = function() {
   this.add = function(user, position) {
     let yPos = Modules.client.Game.instance.world.height - 150;
     let unit = Groups.units.create(position, yPos, 'dude');
+
     unit.body.bounce.y = 0.2;
     unit.body.gravity.y = 300;
     unit.body.collideWorldBounds = true;
@@ -25,15 +26,12 @@ AllUnits = function() {
     //  We need to enable physics on the player
     Modules.client.Game.instance.physics.arcade.enable(unit);
 
-    _Pos.remove({
-      _id: user._id
-    })
+    _Pos.remove({ _id: user._id });
     _Pos.insert({
-      _id: user._id,
-      xPos: position,
-      yPos: yPos
+      _id   : user._id,
+      xPos  : position,
+      yPos  : yPos
     });
-
 
     this.arrayUnit[user.username] = unit;
 

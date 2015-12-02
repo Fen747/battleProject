@@ -19,7 +19,7 @@ let controlsUnit = (action) => {
   if (isClick) {
     // On stock la derniere demande de mouvement
     // On calcul la compensation camera qui permet de savoir ou on se trouve dans le monde pour se deplacer en fonction
-    let compensationCamera = Game.camera.position.x - (GAME_WIDTH/2);
+    let compensationCamera = Game.camera.position.x - (GAME_WIDTH / 2);
     mouvement.x = Math.round(Game.input.position.x + compensationCamera);
     mouvement.x -= RAYON_UNITE;
   }
@@ -31,7 +31,7 @@ let controlsUnit = (action) => {
     // GEstion des ralentissements du personnage en bout de course
     vitesse = VITESSE_MOUVEMENT;
     if (distanceRestante < DISTANCE_RALENTISSEMENT  ) {
-      vitesse = VITESSE_MOUVEMENT * ((distanceRestante * (VITESSE_MOUVEMENT/DISTANCE_RALENTISSEMENT/2)) / 100);
+      vitesse = VITESSE_MOUVEMENT * ((distanceRestante * (VITESSE_MOUVEMENT / DISTANCE_RALENTISSEMENT/2)) / 100);
     }
 
     if (unit.position.x < (mouvement.x + MARGE_ERREUR_MOUVEMENT) && unit.position.x < (mouvement.x - MARGE_ERREUR_MOUVEMENT)) {
