@@ -45,8 +45,18 @@ AllUnits = function() {
     delete(arrayUnit[username]);
   };
 
-  this.get = function(username) {
-    return (username ? arrayUnit[username] : arrayUnit);
+  this.get = function(argument) {
+    if (argument)
+    {
+      if (typeof(argument) === 'object' && argument instanceof Phaser.Sprite)
+      {
+        for (let key in arrayUnit)
+          if (Object.is(arrayUnit[key].getPhaserItem(), argument))
+            return arrayUnit[key];
+        return null;
+      }
+      return (argument ? arrayUnit[argument] : arrayUnit);
+    }
   };
 };
 

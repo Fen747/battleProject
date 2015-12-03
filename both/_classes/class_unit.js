@@ -146,11 +146,7 @@ class_unit.prototype = {
               else
               {
                   // On est arriver, on ne bouge plus
-                  this.getPhaserItem().body.velocity.x = 0;
-                  this.setCurSpeed(0);
-                  this.action = { type: null };
-                  unit.animations.stop();
-                  unit.frame = 4;
+                  this.__proto__.stop();
               }
             }
             break;
@@ -165,10 +161,12 @@ class_unit.prototype = {
   },
 
   move: function ( toPosition ) {
-    this.action = {
-      type  : "move",
-      toPos : toPosition
-    };
+    if (toPosition)
+    {
+      this.action = { type: "move", toPos: toPosition };
+    }
+    else
+      this.stop();
   },
 
   attack: function ( aUnit ) {
@@ -177,6 +175,15 @@ class_unit.prototype = {
 
   getNewEffect: function ( anEffec ) {
     // body...
+  },
+
+  stop: function (argument) {
+    let unit = this.getPhaserItem();
+    this.setCurSpeed(0);
+    this.action = { type: null };
+    unit.body.velocity.x = 0;
+    unit.animations.stop();
+    unit.frame = 4;
   },
 
   logMyAttr: function () {

@@ -1,5 +1,5 @@
 let create = ( ) => {
-  Modules.client.Game.socket = io('http://192.168.1.22:2000');
+  Modules.client.Game.socket = io('http://home.sylchauf.net:2000');
 
   Modules.client.Game.socket.on('connect', function() {
     Modules.client.Game.socket.send();
@@ -74,7 +74,8 @@ let create = ( ) => {
   });
 
   // On demande à la caméra de suivre ce joueur
-  unit.focus();
+      // Je commente car on ne suit pas le bon, et ça devient vite la merdouille pour les tests ^^
+  // unit.focus();
 
   //  Finally some stars to collect
   Groups.stars = Modules.client.Game.instance.add.group();
