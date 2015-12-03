@@ -36,17 +36,17 @@ AllUnits = function() {
     oUnit = new class_unit("dumb", Meteor.userId(), unit);
     oUnit.logMyAttr();
 
-    this.arrayUnit[user.username] = oUnit;
+    arrayUnit[user.username] = oUnit;
 
     return oUnit;
   };
 
   this.remove = function(username) {
-    delete(this.arrayUnit[username]);
+    delete(arrayUnit[username]);
   };
 
   this.get = function(username) {
-    return (username ? this.arrayUnit[username] : this.arrayUnit);
+    return (username ? arrayUnit[username] : arrayUnit);
   };
 };
 
