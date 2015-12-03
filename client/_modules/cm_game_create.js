@@ -1,4 +1,28 @@
 let create = ( ) => {
+  Modules.client.Game.socket = io('http://192.168.1.22:2000');
+
+  Modules.client.Game.socket.on('connect', function() {
+    Modules.client.Game.socket.send();
+      console.log('Connected! Sending Ident');
+      Modules.client.Game.socket.emit('logon', Meteor.userId());
+  });
+
+  Modules.client.Game.socket.on('disconnect', function() {
+      console.log('Disconnected!');
+  });
+
+  /*Modules.client.Game.socket.on('moved', function(unitId, destination) {
+    console.log(destination);
+      //unit = instance_AllUnits.get(unitId);
+      //unit.move(destination);
+  });*/
+
+
+
+
+
+
+
 
   // On définit la taille du monde
   // @TODO Il faudra certainement gérer des maps
@@ -45,12 +69,12 @@ let create = ( ) => {
   Groups.units = Game.add.group();
   Groups.units.enableBody = true;
 
-  Meteor.users.find({}, { sort: { _id: 1 } }).fetch().forEach(function(user, index, array) {
+  Meteor.users.find({}, { sort: { _id: -1 } }).fetch().forEach(function(user, index, array) {
     unit = instance_AllUnits.add(user, index*32);
   });
 
   // On demande à la caméra de suivre ce joueur
-  //Modules.client.Game.instance.camera.follow(unit);
+  unit.focus();
 
   //  Finally some stars to collect
   Groups.stars = Modules.client.Game.instance.add.group();
