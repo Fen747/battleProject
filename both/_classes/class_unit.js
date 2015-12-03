@@ -181,5 +181,9 @@ class_unit.prototype = {
 
   logMyAttr: function () {
     console.log(this.getAttr());
+  },
+
+  focus: function () {
+    Modules.client.Game.instance.camera.follow(this.getPhaserItem());
   }
 };
