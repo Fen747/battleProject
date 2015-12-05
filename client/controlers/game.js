@@ -27,6 +27,10 @@ Template.game.helpers({
   }
 });
 
+window.onbeforeunload = function() {
+  Game.destroy();
+};
+
 
 
 /*
