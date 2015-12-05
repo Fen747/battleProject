@@ -1,5 +1,5 @@
 let create = ( ) => {
-  Modules.client.Game.socket = io('http://home.sylchauf.net:2000');
+  Modules.client.Game.socket = io('http://192.168.1.22:2000');
 
   Modules.client.Game.socket.on('connect', function() {
     Modules.client.Game.socket.send();
@@ -8,7 +8,12 @@ let create = ( ) => {
   });
 
   Modules.client.Game.socket.on('disconnect', function() {
-      console.log('Disconnected!');
+      // La connexion au serveur de jeu est êdu, on relance le jeu coté client
+      location.href=location.href;
+  });
+
+  Modules.client.Game.socket.on('addUnit', function(sprite, position, unitId, owner) {
+    instance_AllUnits.add(sprite, position, unitId, owner);
   });
 
   /*Modules.client.Game.socket.on('moved', function(unitId, destination) {
@@ -69,12 +74,9 @@ let create = ( ) => {
   Groups.units = Game.add.group();
   Groups.units.enableBody = true;
 
-  Meteor.users.find({}, { sort: { _id: -1 } }).fetch().forEach(function(user, index, array) {
-    unit = instance_AllUnits.add(user, index*32);
-  });
-
   // On demande à la caméra de suivre ce joueur
       // Je commente car on ne suit pas le bon, et ça devient vite la merdouille pour les tests ^^
+      // Actuellement, ça dépent de l'ordre de création des comptes
   // unit.focus();
 
   //  Finally some stars to collect

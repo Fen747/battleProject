@@ -11,9 +11,9 @@ let groups = {
 AllUnits = function() {
   let arrayUnit = {};
 
-  this.add = function(user, position) {
+  this.add = function(sprite, position, unitId, owner) {
     let yPos = Modules.client.Game.instance.world.height - 150,
-        unit = Groups.units.create(position, yPos, 'dude');
+        unit = Groups.units.create(position, yPos, sprite);
 
     unit.body.bounce.y = 0.2;
     unit.body.gravity.y = 300;
@@ -26,23 +26,26 @@ AllUnits = function() {
     //  We need to enable physics on the player
     Modules.client.Game.instance.physics.arcade.enable(unit);
 
-    _Pos.remove({ _id: user._id });
-    _Pos.insert({
-      _id   : user._id,
-      xPos  : position,
-      yPos  : yPos
-    });
+    oUnit = new class_unit("dumb", owner, unit);
+    oUnit.setUnitId(unitId);
 
-    oUnit = new class_unit("dumb", Meteor.userId(), unit);
-    oUnit.logMyAttr();
+    unit.inputEnabled = true;
+    unit.events.onInputDown.add(function onDown(unit, pointer) {
+     // do something wonderful here
+     myUnit = instance_AllUnits.get(unit);
+     console.log('Clic sur une unité : ',myUnit.getUnitId());
+     Modules.client.Game.oUnit = myUnit;
+    }, this);
 
-    arrayUnit[user.username] = oUnit;
+    //oUnit.logMyAttr();
+
+    arrayUnit[unitId] = oUnit;
 
     return oUnit;
   };
 
-  this.remove = function(username) {
-    delete(arrayUnit[username]);
+  this.remove = function(unitId) {
+    delete(arrayUnit[unitId]);
   };
 
   this.get = function(argument) {
@@ -65,6 +68,7 @@ Modules.client.Game.data  = data;
 Modules.client.Game.instance  = instance;
 Modules.client.Game.AllUnits = AllUnits;
 Modules.client.Game.groups = groups;
+Modules.client.Game.oUnit  = null;
 
 Game = Modules.client.Game.instance;
 Data = Modules.client.Game.data;

@@ -13,23 +13,32 @@ let update = ( ) => {
   // code ligne 375
   Modules.client.Game.instance.physics.arcade.collide(Groups.units, Groups.platforms);
   Modules.client.Game.instance.physics.arcade.collide(Groups.stars, Groups.platforms);
-  Modules.client.Game.instance.physics.arcade.collide(Groups.units, Groups.units, ( ) => {
+  Modules.client.Game.instance.physics.arcade.collide(Groups.units, Groups.units, ( obj1, obj2 ) => {
     // Ici, CollideCallback. Il ne s'exécute que si le 'processCallback' renvoie true
     // Il s'exécute après l'overlapping et la séparation
+    unit1 = instance_AllUnits.get(obj1);
+    unit2 = instance_AllUnits.get(obj2);
+
+    if (unit1 != null && unit2 != null) {
+      console.log('Collision detecté entre joueur');
+      unit1.move(null);
+      unit2.move(null);
+    }
+
+
   }, ( obj1, obj2 ) => {
     // Ici, le 'processCallback'. Il s'exécute au début de l'overlapping et avant la séparation
-    instance_AllUnits.get(obj1).move(null);
-    instance_AllUnits.get(obj2).move(null);
+
+    return true;
   });
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   //Modules.client.Game.instance.physics.arcade.overlap(player, stars, collectStar, null, this);
 
   // Gestion des déplacement
-  //Modules.client.Game.controlsUnit(instance_AllUnits.get('Sylchauf'), this);
   if (boolGetUnit) {
 
-    docOther = Meteor.users.findOne({
+    /*docOther = Meteor.users.findOne({
       _id: { $ne:Meteor.userId() }
     });
 
@@ -40,7 +49,7 @@ let update = ( ) => {
     if (curPos != dest)
     {
       oUnit.move(dest);
-    }
+    }*/
 
   }
 

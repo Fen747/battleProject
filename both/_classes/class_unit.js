@@ -6,7 +6,7 @@ class_unit = function (aType, anOwner, aPhaserItem) {
   */
   let attr = {
       type        : aType || null,
-      owner       : null,
+      owner       : anOwner || null,
       troopSize   : 100,
       moral       : 100,
       energy      : 100,
@@ -21,6 +21,8 @@ class_unit = function (aType, anOwner, aPhaserItem) {
         current : 0
       }
   };
+
+  let unitId = null;
   /* __Private attributes
   *****************************************************************************/
 
@@ -70,6 +72,9 @@ class_unit = function (aType, anOwner, aPhaserItem) {
   this.getAttr      = ( ) => {
     return attr;
   };
+  this.getUnitId	= ( ) => {
+    return unitId;
+  }
   /* __Getters
   *****************************************************************************/
 
@@ -100,12 +105,18 @@ class_unit = function (aType, anOwner, aPhaserItem) {
   this.setCurSpeed  = ( aSpeed ) => {
     attr.speed.current = aSpeed;
   };
+  this.setUnitId	= ( id ) => {
+    if (unitId == null) {
+      unitId = id;
+    }
+  }
   /* __Setters
   *****************************************************************************/
 };
 
 class_unit.prototype = {
   doAction: function () {
+
     switch (this.action.type) {
         case 'move':
         {
@@ -119,34 +130,32 @@ class_unit.prototype = {
             if (destination != null) {
               distanceRestante = Math.abs(destination - unit.position.x);
 
-              // Si on est à l'arret
-              if (!vitesse)
-              {
-                this.setCurSpeed(VITESSE_MOUVEMENT);
-              }
-
               // GEstion des ralentissements du personnage en bout de course
               if (distanceRestante < 30 )
               {
                 vitesse = VITESSE_MOUVEMENT * ((distanceRestante * (VITESSE_MOUVEMENT / DISTANCE_RALENTISSEMENT / 2)) / 100);
                 this.setCurSpeed(vitesse);
               }
+              else
+              {
+                this.setCurSpeed(VITESSE_MOUVEMENT);
+              }
 
               if (unit.position.x < (destination + MARGE_ERREUR_MOUVEMENT) && unit.position.x < (destination - MARGE_ERREUR_MOUVEMENT))
               {
                   //  Move to the right, on doit bouger
-                  unit.body.velocity.x = vitesse;
+                  unit.body.velocity.x = this.getCurSpeed();
                   unit.animations.play('right');
               }
               else if (unit.position.x > (destination + MARGE_ERREUR_MOUVEMENT) && unit.position.x > (destination - MARGE_ERREUR_MOUVEMENT))
               {
-                  unit.body.velocity.x = -vitesse;
+                  unit.body.velocity.x = -this.getCurSpeed();
                   unit.animations.play('left');
               }
               else
               {
                   // On est arriver, on ne bouge plus
-                  this.__proto__.stop();
+                  this.stop();
               }
             }
             break;
@@ -165,6 +174,7 @@ class_unit.prototype = {
     {
       this.action = { type: "move", toPos: toPosition };
     }
+    // Cette partie fait complétement bugger le déplacement
     else
       this.stop();
   },
