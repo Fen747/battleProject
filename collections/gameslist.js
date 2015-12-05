@@ -1,5 +1,5 @@
-GamesList = new Mongo.Collection("gameslist");
-GamesList.allow({
+GameListDB = new Mongo.Collection("gameListDB");
+GameListDB.allow({
   insert: function(){
     return true;
   },

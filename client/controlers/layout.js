@@ -5,3 +5,7 @@ Template.layout.events({
     });
   }
 });
+
+Template.layout.onCreated(function(){
+  Meteor.subscribe("myself"); 
+});
