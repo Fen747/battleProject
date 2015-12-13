@@ -17,6 +17,7 @@ AllUnits = function() {
 
     unit.body.bounce.y = 0.2;
     unit.body.gravity.y = 300;
+    unit.alpha = 0.7;
     unit.body.collideWorldBounds = true;
 
     //  Our two animations, walking left and right.
@@ -35,6 +36,8 @@ AllUnits = function() {
      myUnit = instance_AllUnits.get(unit);
      console.log('Clic sur une unité : ',myUnit.getUnitId());
      Modules.client.Game.oUnit = myUnit;
+     instance_AllUnits.glow(unit);
+
     }, this);
 
     //oUnit.logMyAttr();
@@ -61,6 +64,22 @@ AllUnits = function() {
       return (argument ? arrayUnit[argument] : arrayUnit);
     }
   };
+
+  this.update = function() {
+    for (unit in arrayUnit) {
+      arrayUnit[unit].doAction();
+    }
+  };
+
+  this.glow = function(unitGlow) {
+    unitGlow.alpha = 1;
+
+    for (unit in arrayUnit) {
+      if (!Object.is(arrayUnit[unit].getPhaserItem(), unitGlow)) {
+        arrayUnit[unit].getPhaserItem().alpha = 0.7;
+      }
+    }
+  };
 };
 
 Modules.client.Game           = {};
@@ -69,6 +88,7 @@ Modules.client.Game.instance  = instance;
 Modules.client.Game.AllUnits = AllUnits;
 Modules.client.Game.groups = groups;
 Modules.client.Game.oUnit  = null;
+Modules.client.Game.socket  = null;
 
 Game = Modules.client.Game.instance;
 Data = Modules.client.Game.data;

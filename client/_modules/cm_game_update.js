@@ -20,7 +20,7 @@ let update = ( ) => {
     unit2 = instance_AllUnits.get(obj2);
 
     if (unit1 != null && unit2 != null) {
-      console.log('Collision detecté entre joueur');
+      console.log('Collision detecté entre joueur', unit1, unit2);
       unit1.move(null);
       unit2.move(null);
     }
@@ -36,24 +36,9 @@ let update = ( ) => {
   //Modules.client.Game.instance.physics.arcade.overlap(player, stars, collectStar, null, this);
 
   // Gestion des déplacement
-  if (boolGetUnit) {
+  instance_AllUnits.update();
 
-    /*docOther = Meteor.users.findOne({
-      _id: { $ne:Meteor.userId() }
-    });
-
-    other = instance_AllUnits.get(docOther.username);
-    let curPos = other.getPhaserItem().position.x;
-    let dest = _Pos.findOne(docOther._id ).xPos;
-
-    if (curPos != dest)
-    {
-      oUnit.move(dest);
-    }*/
-
-  }
-
-  Modules.client.Game.controlsUnit();
+  //console.log('one tick');
 
 };
 

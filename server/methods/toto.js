@@ -5,21 +5,6 @@ Meteor.methods({
         ready: true
       }
     } });
-
-
-
-/*    let gId = GameListDB.insert({
-      players   : [{
-        _id   : this.userId,
-        ready : true
-      }],
-      unitList  : []
-    });
-    GameListInstances[gId] = Modules.both.queryGet({
-      type    : 'gameListDB',
-      method  : 'findOne',
-      query   : { _id: gId }
-    });*/
   },
 
   unSetReady: function() {

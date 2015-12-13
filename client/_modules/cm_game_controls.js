@@ -29,12 +29,13 @@ let controlsUnit = (action) => {
     mouvement.x -= RAYON_UNITE;
     Modules.client.Game.oUnit.move(mouvement.x);
 
-    Modules.client.Game.socket.emit('goTo', Meteor.user().username, mouvement.x);
+    Modules.client.Game.socket.emit('goTo',   gameId = Session.get('gameId'), Modules.client.Game.oUnit.getUnitId(), mouvement.x);
   }
 
   if (Modules.client.Game.oUnit != null) {
     Modules.client.Game.oUnit.doAction();
   }
+
 };
 
 Modules.client.Game.controlsUnit    = controlsUnit;

@@ -1,4 +1,6 @@
 let preload = ( ) => {
+  Modules.client.Game.instance.stage.disableVisibilityChange = true;
+  
   Modules.client.Game.instance.load.image('sky', 'assets/sky.png');
   Modules.client.Game.instance.load.image('ground', 'assets/platform.png');
   Modules.client.Game.instance.load.image('star', 'assets/star.png');

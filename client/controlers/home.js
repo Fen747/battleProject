@@ -2,9 +2,8 @@ Template.home.events({
   "click #runWar": function(event, template){
     Session.set('isSearch', true);
 
-    Meteor.call('setReady', function(error, result) {
-      console.log('test1');
-      findWar(template);
+    Meteor.call('setReady', function() {
+      Modules.client.Game.socket.emit('findWar', Meteor.userId());
     });
   },
 
@@ -12,22 +11,19 @@ Template.home.events({
     Meteor.call('unSetReady');
 
     Session.set('isSearch', false);
-
-    // On se soustrait à la liste d'attente dans la salle d'attente
-    template.lookingForPlayers.stop();
   },
 });
 
 Template.home.onCreated(function(){
   let self = this;
 
-  if (Session.get('isSearch'))
-  {
-    findWar(self);
-  }
-  /*Tracker.autorun(function(){
-      self.lookingForPlayers.stop();
-  });*/
+  Modules.client.Game.socket = io('http://192.168.1.22:2000');
+
+  Modules.client.Game.socket.on('joinGame', function(gameId) {
+      // La connexion au serveur de jeu est êdu, on relance le jeu coté client
+      Session.set('gameId', gameId);
+      location.href='/game';
+  });
 });
 
 Template.home.helpers({
@@ -36,21 +32,6 @@ Template.home.helpers({
   }
 });
 
+Template.home.onRendered(function(){
 
-findWar = function(template) {
-  if (Meteor.userId()) {
-    template.lookingForPlayers = Meteor.subscribe("lookingForPlayers", Meteor.userId(), function() {
-      console.log('On commence a chercher un ennemi', Modules.both.queries.lookForReadyPlayer());
-      Modules.both.queries.lookForReadyPlayer().observe({
-        added: ( item ) => {
-            console.log('Nous avons trouvé un ennemi');
-            Session.set('found', item._id);
-            Session.set('isSearch', false);
-            Meteor.call('unSetReady');
-            template.lookingForPlayers.stop();
-            FlowRouter.go('/game');
-        }
-      });
-    });
-  }
-};
+});

@@ -14,7 +14,7 @@ Template.game.onCreated(function(){
         update  : Modules.client.Game.update
       });
       Game = Modules.client.Game.instance;
-      Modules.client.Game.instance.transparent = true;
+      //Modules.client.Game.instance.transparent = true;
     });
   });
 
@@ -28,7 +28,7 @@ Template.game.helpers({
 });
 
 window.onbeforeunload = function() {
-  Game.destroy();
+  //Game.destroy();
 };
 
 

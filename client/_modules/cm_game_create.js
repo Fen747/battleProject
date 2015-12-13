@@ -2,7 +2,6 @@ let create = ( ) => {
   Modules.client.Game.socket = io('http://192.168.1.22:2000');
 
   Modules.client.Game.socket.on('connect', function() {
-    Modules.client.Game.socket.send();
       console.log('Connected! Sending Ident');
       Modules.client.Game.socket.emit('logon', Meteor.userId());
   });
@@ -16,11 +15,12 @@ let create = ( ) => {
     instance_AllUnits.add(sprite, position, unitId, owner);
   });
 
-  /*Modules.client.Game.socket.on('moved', function(unitId, destination) {
-    console.log(destination);
-      //unit = instance_AllUnits.get(unitId);
-      //unit.move(destination);
-  });*/
+  Modules.client.Game.socket.on('moved', function(unitId, destination) {
+    console.log('Moved', unitId, destination);
+      unit = instance_AllUnits.get(unitId);
+      console.log(unit);
+      unit.move(destination);
+  });
 
 
 
