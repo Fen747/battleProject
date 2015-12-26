@@ -23,12 +23,6 @@ let create = ( ) => {
   });
 
 
-
-
-
-
-
-
   // On définit la taille du monde
   // @TODO Il faudra certainement gérer des maps
   Modules.client.Game.instance.world.setBounds(0, 0, 1920, 600);
