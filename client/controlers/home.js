@@ -22,7 +22,7 @@ Template.home.onCreated(function(){
   Modules.client.Game.socket.on('joinGame', function(gameId) {
       // La connexion au serveur de jeu est êdu, on relance le jeu coté client
       Session.set('gameId', gameId);
-      location.href='/game';
+      FlowRouter.go('game');
   });
 });
 

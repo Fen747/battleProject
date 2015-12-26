@@ -1,16 +1,3 @@
-Meteor.publish("getAllPlayers", function(argument){
-  return Meteor.users.find({}, {
-    fields: {
-      username: true
-    },
-    sort: {
-      username: 1
-    },
-    limit: 2
-  });
-});
-
-
 Meteor.publish("myself", function(){
   return Modules.both.queryGet({
     type: 'users',
