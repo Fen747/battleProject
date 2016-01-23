@@ -1,4 +1,4 @@
-Meteor.publish("getUserInGame", function(argument){
+Meteor.publish("getUserInGame", function(){
   let cursor = Modules.both.queryGet({
     type: 'gameListDB',
     method: 'find',
@@ -12,15 +12,16 @@ Meteor.publish("getUserInGame", function(argument){
     }
   });
 
-  console.log(cursor.fetch());
+  let players = cursor.fetch()[0].players.map(function(elem) {
+    console.log('ID PUBLISH :::: '+elem._id);
+    return elem._id;
+  });
 
   return [cursor, Modules.both.queryGet({
     type: 'users',
     method: 'find',
     query: {
-      _id: { $in: cursor.fetch()[0].players.map(function(elem) {
-        return elem._id;
-      })}
+      _id: { $in: players }
     },
     projection: {
       sort: { _id: 1},

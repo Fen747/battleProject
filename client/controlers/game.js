@@ -6,8 +6,11 @@ Template.game.onCreated(function(){
   Meteor.subscribe("getPosition", function() {
   });
 
+Tracker.autorun(function(){
+  Session.get('gameId');
   Meteor.subscribe("getUserInGame", function() {
   });
+});
 
 
   $(document).ready(function() {
@@ -28,21 +31,18 @@ Template.game.helpers({
   listPlayers: function(){
     let cursor =  Modules.both.queryGet({
       type: 'gameListDB',
-      method: 'findOne',
-      query: {
-        _id: Session.get('gameId')
-      },
+      method: 'find',
       projection: {
-        field: { players: true }
+        field: { players: true },
+        limit: 1
       }
     });
 
-    if (cursor) {
+    if (cursor.count()) {
+        cursor = cursor.fetch()[0];
       let players = cursor.players.map(function(e) {
         return e._id;
       });
-
-      console.log(players);
 
       return Modules.both.queryGet({
         type: 'users',

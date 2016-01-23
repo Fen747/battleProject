@@ -21,8 +21,8 @@ let update = ( ) => {
 
     if (unit1 != null && unit2 != null) {
       console.log('Collision detecté entre joueur', unit1, unit2);
-      unit1.move(null);
-      unit2.move(null);
+      /*unit1.move(null);
+      unit2.move(null);*/
     }
 
 
@@ -37,8 +37,6 @@ let update = ( ) => {
 
   // Gestion des déplacement
   instance_AllUnits.update();
-
-  console.log('one tick');
 
 };
 

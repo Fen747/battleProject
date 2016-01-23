@@ -33,11 +33,17 @@ AllUnits = function() {
     unit.inputEnabled = true;
     unit.events.onInputDown.add(function onDown(unit, pointer) {
      // do something wonderful here
-     myUnit = instance_AllUnits.get(unit);
-     console.log('Clic sur une unité : ',myUnit.getUnitId());
-     Modules.client.Game.oUnit = myUnit;
-     instance_AllUnits.glow(unit);
+     if (!Object.is(unit, oUnit) && Game.input.activePointer.leftButton.isDown) {
+         myUnit = instance_AllUnits.get(unit);
+         console.log('Clic sur une unité : ',myUnit.getOwner());
 
+         if (myUnit.getOwner() == Meteor.userId()) {
+           Modules.client.Game.oUnit = myUnit;
+           instance_AllUnits.glow(unit);
+         } else {
+           console.log('TOUCHE PAS C PAS A TOI !');
+         }
+     }
     }, this);
 
     //oUnit.logMyAttr();

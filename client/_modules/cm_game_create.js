@@ -1,23 +1,10 @@
 let create = ( ) => {
   startListeners();
 
-<<<<<<< HEAD
+
  // FPS
-  Modules.client.Game.instance.time.desiredFps = 30;
-=======
-  Modules.client.Game.socket.on('connect', function() {
-      console.log('Connected! Sending Ident');
-      Modules.client.Game.socket.emit('logon', Meteor.userId());
-  });
+  //Modules.client.Game.instance.time.desiredFps = 30;
 
-  Modules.client.Game.socket.on('disconnect', function() {
-      // La connexion au serveur de jeu est êdu, on relance le jeu coté client
-      location.href=location.href;
-  });
-
-  Modules.client.Game.socket.on('addUnit', function(sprite, position, unitId, owner) {
-    instance_AllUnits.add(sprite, position, unitId, owner);
-  });
 
   Modules.client.Game.socket.on('moved', function(unitId, destination) {
     console.log('Moved', unitId, destination);
@@ -25,12 +12,14 @@ let create = ( ) => {
       console.log(unit);
       unit.move(destination);
   });
->>>>>>> origin/master
+
 
 
   // On définit la taille du monde
   // @TODO Il faudra certainement gérer des maps
   Modules.client.Game.instance.world.setBounds(0, 0, 1920, 600);
+
+  Modules.client.Game.instance.canvas.oncontextmenu = function (e) { e.preventDefault(); };
 
   // On fait en sorte que le jeu se redimensionne selon la taille de l'écran
 		Modules.client.Game.instance.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
