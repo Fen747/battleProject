@@ -18,7 +18,6 @@ Template.home.onCreated(function(){
   let self = this;
 
   Modules.client.Game.socket = io('http://192.168.1.22:2000');
-
   Modules.client.Game.socket.on('joinGame', function(gameId) {
       // La connexion au serveur de jeu est êdu, on relance le jeu coté client
       Session.set('gameId', gameId);

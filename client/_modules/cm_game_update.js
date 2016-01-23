@@ -38,7 +38,7 @@ let update = ( ) => {
   // Gestion des déplacement
   instance_AllUnits.update();
 
-  //console.log('one tick');
+  console.log('one tick');
 
 };
 

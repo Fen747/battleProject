@@ -75,6 +75,7 @@ class_unit = function (aType, anOwner, aPhaserItem) {
   this.getUnitId	= ( ) => {
     return unitId;
   }
+
   /* __Getters
   *****************************************************************************/
 
@@ -115,6 +116,14 @@ class_unit = function (aType, anOwner, aPhaserItem) {
 };
 
 class_unit.prototype = {
+  getAction: function() {
+    return this.action;
+  },
+
+  setAction: function( action ) {
+      this.action = action;
+  },
+
   doAction: function () {
 
     switch (this.action.type) {
@@ -169,24 +178,6 @@ class_unit.prototype = {
     }
   },
 
-  move: function ( toPosition ) {
-    if (toPosition)
-    {
-      this.action = { type: "move", toPos: toPosition };
-    }
-    // Cette partie fait complétement bugger le déplacement
-    else
-      this.stop();
-  },
-
-  attack: function ( aUnit ) {
-    // TODO
-  },
-
-  getNewEffect: function ( anEffec ) {
-    // body...
-  },
-
   stop: function (argument) {
     let unit = this.getPhaserItem();
     this.setCurSpeed(0);
@@ -196,11 +187,22 @@ class_unit.prototype = {
     unit.frame = 4;
   },
 
+  // myUnit.startAction('move', { x, y });
+  startAction: function (func, args) {
+    Modules.client.Game.socket.emit('validateAction', Session.get('gameId'), this.getUnitId(), { type: func, args });
+  },
+
   logMyAttr: function () {
     console.log(this.getAttr());
+  },
+
+
+  getNewEffect: function ( anEffec ) {
+    // body...
   },
 
   focus: function () {
     Modules.client.Game.instance.camera.follow(this.getPhaserItem());
   }
+
 };

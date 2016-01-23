@@ -21,15 +21,14 @@ let controlsUnit = (action) => {
   let isClick = action instanceof Phaser.Pointer;
 
   if (isClick && Modules.client.Game.oUnit != null) {
-    console.log('move');
     // On stock la derniere demande de mouvement
     // On calcul la compensation camera qui permet de savoir ou on se trouve dans le monde pour se deplacer en fonction
     let compensationCamera = Game.camera.position.x - (GAME_WIDTH / 2);
     mouvement.x = Math.round(Game.input.position.x + compensationCamera);
     mouvement.x -= RAYON_UNITE;
-    Modules.client.Game.oUnit.move(mouvement.x);
-
-    Modules.client.Game.socket.emit('goTo',   gameId = Session.get('gameId'), Modules.client.Game.oUnit.getUnitId(), mouvement.x);
+    //Modules.client.Game.oUnit.move(mouvement.x);
+    Modules.client.Game.oUnit.startAction('move', { toPos: mouvement.x});
+    //Modules.client.Game.socket.emit('goTo',   gameId = Session.get('gameId'), Modules.client.Game.oUnit.getUnitId(), mouvement.x);
   }
 
   if (Modules.client.Game.oUnit != null) {

@@ -29,6 +29,9 @@ Template.game.helpers({
     let cursor =  Modules.both.queryGet({
       type: 'gameListDB',
       method: 'findOne',
+      query: {
+        _id: Session.get('gameId')
+      },
       projection: {
         field: { players: true }
       }
