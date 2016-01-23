@@ -1,8 +1,32 @@
 let create = ( ) => {
   startListeners();
 
+<<<<<<< HEAD
  // FPS
   Modules.client.Game.instance.time.desiredFps = 30;
+=======
+  Modules.client.Game.socket.on('connect', function() {
+      console.log('Connected! Sending Ident');
+      Modules.client.Game.socket.emit('logon', Meteor.userId());
+  });
+
+  Modules.client.Game.socket.on('disconnect', function() {
+      // La connexion au serveur de jeu est êdu, on relance le jeu coté client
+      location.href=location.href;
+  });
+
+  Modules.client.Game.socket.on('addUnit', function(sprite, position, unitId, owner) {
+    instance_AllUnits.add(sprite, position, unitId, owner);
+  });
+
+  Modules.client.Game.socket.on('moved', function(unitId, destination) {
+    console.log('Moved', unitId, destination);
+      unit = instance_AllUnits.get(unitId);
+      console.log(unit);
+      unit.move(destination);
+  });
+>>>>>>> origin/master
+
 
   // On définit la taille du monde
   // @TODO Il faudra certainement gérer des maps
