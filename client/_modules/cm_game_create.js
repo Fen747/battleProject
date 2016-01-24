@@ -3,7 +3,7 @@ let create = ( ) => {
 
 
  // FPS
-  //Modules.client.Game.instance.time.desiredFps = 30;
+  Modules.client.Game.instance.time.desiredFps = 25;
 
 
   Modules.client.Game.socket.on('moved', function(unitId, destination) {

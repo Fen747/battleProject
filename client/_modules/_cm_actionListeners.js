@@ -20,5 +20,8 @@ startListeners = ( ) => {
     instance_AllUnits.get(unitId).setAction(actionDetails);
   });
 
+  Modules.client.Game.socket.on('ping', function(timestamp) {
+    Modules.client.Game.socket.emit('pong', timestamp);
+  });
 
 };
