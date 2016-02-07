@@ -15,13 +15,20 @@ startListeners = ( ) => {
     instance_AllUnits.add(sprite, position, unitId, owner);
   });
 
-  Modules.client.Game.socket.on('validatedAction', function(unitId, actionDetails) {
-    console.log('On a recu un ordre de la part du serveur ', unitId, actionDetails);
-    instance_AllUnits.get(unitId).setAction(actionDetails);
+  Modules.client.Game.socket.on('validatedAction', function(unitId, actionDetails, adjustedTime) {
+    console.log('On a recu un ordre de la part du serveur ', unitId, actionDetails, adjustedTime);
+    var localTime = new Date().getTime();
+    var timeReference = localTime - adjustedTime;
+
+    setTimeout(function() {
+        instance_AllUnits.get(unitId).setAction(actionDetails);
+    }, timeReference);
+
   });
 
   Modules.client.Game.socket.on('ping', function(timestamp) {
-    Modules.client.Game.socket.emit('pong', timestamp);
+    clientTimeStamp = new Date().getTime();
+    Modules.client.Game.socket.emit('pong', timestamp, clientTimeStamp);
   });
 
 };
