@@ -68,6 +68,8 @@ AllUnits = function() {
         return null;
       }
       return (argument ? arrayUnit[argument] : arrayUnit);
+    } else {
+      return arrayUnit;
     }
   };
 

@@ -171,8 +171,7 @@ class_unit.prototype = {
         }
         default:
         {
-            this.getPhaserItem().body.velocity.x = 0;
-            this.action = { type: null };
+            this.stop();
             break;
         }
     }

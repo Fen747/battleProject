@@ -13,7 +13,7 @@ let update = ( ) => {
   // code ligne 375
   Modules.client.Game.instance.physics.arcade.collide(Groups.units, Groups.platforms);
   Modules.client.Game.instance.physics.arcade.collide(Groups.stars, Groups.platforms);
-  Modules.client.Game.instance.physics.arcade.collide(Groups.units, Groups.units, ( obj1, obj2 ) => {
+  /*Modules.client.Game.instance.physics.arcade.collide(Groups.units, Groups.units, ( obj1, obj2 ) => {
     // Ici, CollideCallback. Il ne s'exécute que si le 'processCallback' renvoie true
     // Il s'exécute après l'overlapping et la séparation
     unit1 = instance_AllUnits.get(obj1);
@@ -22,7 +22,7 @@ let update = ( ) => {
     if (unit1 != null && unit2 != null) {
       console.log('Collision detecté entre joueur', unit1, unit2);
       /*unit1.move(null);
-      unit2.move(null);*/
+      unit2.move(null);
     }
 
 
@@ -30,7 +30,7 @@ let update = ( ) => {
     // Ici, le 'processCallback'. Il s'exécute au début de l'overlapping et avant la séparation
 
     return true;
-  });
+  });*/
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
   //Modules.client.Game.instance.physics.arcade.overlap(player, stars, collectStar, null, this);

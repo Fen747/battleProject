@@ -1,6 +1,6 @@
 startListeners = ( ) => {
   console.log('Start listening');
-  Modules.client.Game.socket = io('http://192.168.1.22:2000');
+  Modules.client.Game.socket = io('http://dux-bellorum.ovh:2000');
 
   console.log('Connected! Sending Ident');
   Modules.client.Game.socket.emit('logon', Meteor.userId());
@@ -29,6 +29,15 @@ startListeners = ( ) => {
   Modules.client.Game.socket.on('ping', function(timestamp) {
     clientTimeStamp = new Date().getTime();
     Modules.client.Game.socket.emit('pong', timestamp, clientTimeStamp);
+  });
+
+  Modules.client.Game.socket.on('majPosDebug', function(mesUnits) {
+    depDEBUG.changed();
+    for (var i = 0; i < mesUnits.length; i++) {
+      var unit = mesUnits[i];
+      console.log(unit);
+      document.getElementById(unit.id).innerHTML = unit.position;
+    }
   });
 
 };

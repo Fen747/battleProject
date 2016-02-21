@@ -5,7 +5,34 @@
     {{/each}}
   </ul>
 
-  <span class="gameId">GameId:{{$.Session.get 'gameId'}}</span>
+  <!--<span class="gameId">GameId:{{$.Session.get 'gameId'}}</span>-->
+
+  <table>
+    <thead>
+      <th>
+        Unit
+      </th>
+      <th>
+        Phaser
+      </th>
+      <th>
+        Server
+      </th>
+    </thead>
+    {{#each getUnits}}
+    <tr>
+      <td>
+        {{_id}}
+      </td>
+      <td>
+        {{phaser}}
+      </td>
+      <td id="{{_id}}">
+
+      </td>
+    </tr>
+    {{/each}}
+  </table>
 
   <div id="divGame"></div>
 

@@ -1,3 +1,5 @@
+depDEBUG = new Tracker.Dependency;
+
 Template.game.onRendered(function() {
 
 });
@@ -8,8 +10,7 @@ Template.game.onCreated(function(){
 
 Tracker.autorun(function(){
   Session.get('gameId');
-  Meteor.subscribe("getUserInGame", function() {
-  });
+  Meteor.subscribe("getUserInGame");
 });
 
 
@@ -59,12 +60,24 @@ Template.game.helpers({
 
     }
 
+  },
 
 
+  getUnits: function () {
+    let all_units = instance_AllUnits.get();
+    let array = [];
+
+    depDEBUG.depend();
+
+    for (let unit in all_units) {
+      array.push({
+        _id     : all_units[unit].getUnitId(),
+        phaser  : all_units[unit].getPhaserItem().position.x
+      });
+    }
+
+    return array;
   }
-
-
-
 
 });
 

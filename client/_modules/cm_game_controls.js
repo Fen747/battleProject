@@ -18,7 +18,7 @@ let controlsUnit = (action) => {
     mouvement.x = Math.round(Game.input.position.x + compensationCamera);
     mouvement.x -= RAYON_UNITE;
 
-    Modules.client.Game.socket.emit('askValidateAction',  Session.get('gameId'), Modules.client.Game.oUnit.getUnitId(), {type: 'move',  args: {toPos: mouvement.x}});
+    Modules.client.Game.socket.emit('askValidateAction',  Session.get('gameId'), Modules.client.Game.oUnit.getUnitId(), {type: 'move', toPos: mouvement.x});
   }
 
   if (Modules.client.Game.oUnit != null) {
