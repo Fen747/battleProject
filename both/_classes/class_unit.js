@@ -14,7 +14,7 @@ class_unit = function (aType, anOwner, aPhaserItem) {
       damage      : 1,
       range       : 3,
       effects     : [],
-      position    : [],
+      position    : aPhaserItem.position.x,
       phaser_item : aPhaserItem || null,
       speed       : {
         max     : 200,
@@ -102,6 +102,7 @@ class_unit = function (aType, anOwner, aPhaserItem) {
   };
   this.setPosition  = ( aPosition ) => {
     attr.position = aPosition;
+    attr.phaser_item.position.x = aPosition;
   };
   this.setCurSpeed  = ( aSpeed ) => {
     attr.speed.current = aSpeed;
@@ -140,15 +141,15 @@ class_unit.prototype = {
               distanceRestante = Math.abs(destination - unit.position.x);
 
               // GEstion des ralentissements du personnage en bout de course
-              if (distanceRestante < 30 )
+              /*if (distanceRestante < 30 )
               {
                 vitesse = VITESSE_MOUVEMENT * ((distanceRestante * (VITESSE_MOUVEMENT / DISTANCE_RALENTISSEMENT / 2)) / 100);
                 this.setCurSpeed(vitesse);
               }
               else
-              {
+              {*/
                 this.setCurSpeed(VITESSE_MOUVEMENT);
-              }
+              //}
 
               if (unit.position.x < (destination + MARGE_ERREUR_MOUVEMENT) && unit.position.x < (destination - MARGE_ERREUR_MOUVEMENT))
               {

@@ -11,7 +11,6 @@ startListeners = ( ) => {
   });
 
   Modules.client.Game.socket.on('addUnit', function(sprite, position, unitId, owner) {
-    console.log(arguments);
     instance_AllUnits.add(sprite, position, unitId, owner);
   });
 
@@ -31,12 +30,13 @@ startListeners = ( ) => {
     Modules.client.Game.socket.emit('pong', timestamp, clientTimeStamp);
   });
 
-  Modules.client.Game.socket.on('majPosDebug', function(mesUnits) {
+  Modules.client.Game.socket.on('update_unit_pos', function(mesUnits) {
     depDEBUG.changed();
     for (var i = 0; i < mesUnits.length; i++) {
       var unit = mesUnits[i];
-      console.log(unit);
       document.getElementById(unit.id).innerHTML = unit.position;
+
+      instance_AllUnits.get(unit.id).setPosition(unit.position);
     }
   });
 
